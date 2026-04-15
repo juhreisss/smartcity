@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+admin.site.register(Local)
+admin.site.register(Responsavel)
+admin.site.register(Ambiente)
+admin.site.register(Microcontrolador)
+admin.site.register(Sensor)
+admin.site.register(Historico)
+admin.site.register(Usuario)

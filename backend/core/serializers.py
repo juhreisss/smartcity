@@ -25,7 +25,9 @@ class UsuarioMeSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = '__all__'
+        fields = [
+            'id', 'user', 'nome', 'telefone', 'tipo'
+        ]
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -49,7 +51,7 @@ class RegisterSerializer(serializers.Serializer):
             password=validated_data['password']
         )
 
-        user.is_staff = True if tipo == "ADMIN" else False
+        user.is_staff = (tipo == "ADMIN")
         user.is_active = True
         user.is_superuser = False
         user.save()
@@ -67,13 +69,14 @@ class RegisterSerializer(serializers.Serializer):
 class LocalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Local
-        fields = '__all__'
+        fields = ['id', 'nome']
 
 
 class ResponsavelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Responsavel
-        fields = '__all__'
+        fields = ['id', 'nome']
+
 
 
 class AmbienteSerializer(serializers.ModelSerializer):
@@ -82,7 +85,15 @@ class AmbienteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ambiente
-        fields = '__all__'
+        fields = [
+            'id',
+            'local',
+            'descricao',
+            'responsavel',
+            'local_nome',
+            'responsavel_nome'
+        ]
+
 
 
 class MicrocontroladorSerializer(serializers.ModelSerializer):
@@ -90,7 +101,17 @@ class MicrocontroladorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Microcontrolador
-        fields = '__all__'
+        fields = [
+            'id',
+            'modelo',
+            'mac_address',
+            'latitude',
+            'longitude',
+            'status',
+            'ambiente',
+            'ambiente_nome'
+        ]
+
 
 
 class SensorSerializer(serializers.ModelSerializer):
@@ -99,7 +120,16 @@ class SensorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sensor
-        fields = '__all__'
+        fields = [
+            'id',
+            'sensor',
+            'unidade_med',
+            'mic',
+            'status',
+            'micro_modelo',
+            'ambiente_nome'
+        ]
+
 
 
 class HistoricoSerializer(serializers.ModelSerializer):
@@ -108,7 +138,14 @@ class HistoricoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Historico
-        fields = '__all__'
+        fields = [
+            'id',
+            'sensor',
+            'valor',
+            'timestamp',
+            'sensor_nome',
+            'unidade'
+        ]
 
 
 class SensorDetailSerializer(serializers.ModelSerializer):
@@ -118,4 +155,13 @@ class SensorDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sensor
-        fields = '__all__'
+        fields = [
+            'id',
+            'sensor',
+            'unidade_med',
+            'mic',
+            'status',
+            'micro_modelo',
+            'ambiente_nome',
+            'historicos'
+        ]

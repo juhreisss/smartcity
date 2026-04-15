@@ -10,6 +10,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import *
 from .serializers import *
 
+from django.utils import timezone
+from datetime import timedelta
+import pandas as pd
+from .permissions import IsAdminOrReadOnly
+
 class UsuarioViewSet(ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
@@ -39,31 +44,35 @@ class UsuarioViewSet(ModelViewSet):
             for v, l in Usuario.TIPO_CHOICES
         ])
 
+
 class LocalViewSet(ModelViewSet):
     queryset = Local.objects.all()
     serializer_class = LocalSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
+
 
 class ResponsavelViewSet(ModelViewSet):
     queryset = Responsavel.objects.all()
     serializer_class = ResponsavelSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
+
 
 class AmbienteViewSet(ModelViewSet):
     queryset = Ambiente.objects.all()
     serializer_class = AmbienteSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = AmbienteFilter
+    filterset_class = AmbienteFilter
+
 
 class MicrocontroladorViewSet(ModelViewSet):
     queryset = Microcontrolador.objects.all()
     serializer_class = MicrocontroladorSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = MicrocontroladorFilter
+    filterset_class = MicrocontroladorFilter
 
     @action(detail=True, methods=['get'])
     def sensores(self, request, pk=None):
@@ -72,13 +81,14 @@ class MicrocontroladorViewSet(ModelViewSet):
         serializer = SensorSerializer(sensores, many=True)
         return Response(serializer.data)
 
+
 class SensorViewSet(ModelViewSet):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = SensorFilter
+    filterset_class = SensorFilter
 
     @action(detail=True, methods=['get'])
     def historico(self, request, pk=None):
@@ -87,11 +97,126 @@ class SensorViewSet(ModelViewSet):
         serializer = HistoricoSerializer(historicos, many=True)
         return Response(serializer.data)
 
+
 class HistoricoViewSet(ModelViewSet):
     queryset = Historico.objects.all()
     serializer_class = HistoricoSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = HistoricoFilter
+    filterset_class = HistoricoFilter
 
+    @action(detail=False, methods=['get'])
+    def ultimas_24h(self, request):
+        agora = timezone.now()
+        ultimas = agora - timedelta(hours=24)
+
+        historicos = Historico.objects.filter(timestamp__gte=ultimas)
+        serializer = HistoricoSerializer(historicos, many=True)
+
+        return Response(serializer.data)
+
+
+# IMPORTAÇÃO DAS PLANILHAS
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def importar_locais(request):
+    arquivo = request.FILES.get('file')
+    df = pd.read_excel(arquivo)
+
+    for _, row in df.iterrows():
+        Local.objects.get_or_create(
+            nome=row['local']
+        )
+
+    return Response({"msg": "Locais importados"})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def importar_responsaveis(request):
+    arquivo = request.FILES.get('file')
+    df = pd.read_excel(arquivo)
+
+    for _, row in df.iterrows():
+        Responsavel.objects.get_or_create(
+            nome=row['responsavel']
+        )
+
+    return Response({"msg": "Responsáveis importados"})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def importar_microcontroladores(request):
+    arquivo = request.FILES.get('file')
+    df = pd.read_excel(arquivo)
+
+    for _, row in df.iterrows():
+        ambiente = Ambiente.objects.get(id=row['ambiente'])
+
+        Microcontrolador.objects.create(
+            modelo=row['modelo'],
+            mac_address=row['mac_address'],
+            latitude=row['latitude'],
+            longitude=row['longitude'],
+            status=True if row['status'] == 'VERDADEIRO' else False,
+            ambiente=ambiente
+        )
+
+    return Response({"msg": "Microcontroladores importados"})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def importar_sensores(request):
+    arquivo = request.FILES.get('file')
+    df = pd.read_excel(arquivo)
+
+    for _, row in df.iterrows():
+        mic = Microcontrolador.objects.get(id=row['mic'])
+
+        Sensor.objects.create(
+            sensor=row['sensor'],
+            unidade_med=row['unidade_med'],
+            mic=mic,
+            status=True
+        )
+
+    return Response({"msg": "Sensores importados"})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def importar_historico(request):
+    arquivo = request.FILES.get('file')
+    df = pd.read_excel(arquivo)
+
+    for _, row in df.iterrows():
+        sensor = Sensor.objects.get(id=row['sensor'])
+
+        Historico.objects.create(
+            sensor=sensor,
+            valor=row['valor']
+        )
+
+    return Response({"msg": "Histórico importado"})
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def importar_ambientes(request):
+    arquivo = request.FILES.get('file')
+    df = pd.read_excel(arquivo)
+
+    for _, row in df.iterrows():
+        local = Local.objects.get(nome=row['local'])
+        responsavel = Responsavel.objects.get(nome=row['responsavel'])
+
+        Ambiente.objects.create(
+            local=local,
+            descricao=row['descricao'],
+            responsavel=responsavel
+        )
+
+    return Response({"msg": "Ambientes importados"})

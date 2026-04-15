@@ -16,8 +16,18 @@ router.register(r'sensores', SensorViewSet)
 router.register(r'historicos', HistoricoViewSet)
 
 urlpatterns = [
-    path('token/', TokenObtainPairView.as_view(), name='token'),
-    path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+path('token/', TokenObtainPairView.as_view(), name='token'),
+path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     
-    path('api/', include(router.urls)),
+path('', include(router.urls)),
+
+
+path('importar-locais/', importar_locais),
+path('importar-responsaveis/', importar_responsaveis),
+path('importar-ambientes/', importar_ambientes),
+path('importar-microcontroladores/', importar_microcontroladores),
+path('importar-sensores/', importar_sensores),
+path('importar-historico/', importar_historico),
+
 ]
