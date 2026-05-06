@@ -1,5 +1,5 @@
 """
-WSGI config for api_smart project.
+WSGI config for smart project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api_smart.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smart.settings')
 
 application = get_wsgi_application()

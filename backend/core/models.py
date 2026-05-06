@@ -37,7 +37,7 @@ class Ambiente(models.Model):
 
 class Microcontrolador(models.Model):
     modelo = models.CharField(max_length=100)
-    mac_address = models.CharField(max_length=100)
+    mac_address = models.CharField(max_length=100, unique=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
     status = models.BooleanField(default=True)

@@ -14,6 +14,7 @@ from django.utils import timezone
 from datetime import timedelta
 import pandas as pd
 from .permissions import IsAdminOrReadOnly
+from rest_framework.pagination import PageNumberPagination
 
 class UsuarioViewSet(ModelViewSet):
     queryset = Usuario.objects.all()
@@ -105,6 +106,7 @@ class HistoricoViewSet(ModelViewSet):
 
     filter_backends = [DjangoFilterBackend]
     filterset_class = HistoricoFilter
+
 
     @action(detail=False, methods=['get'])
     def ultimas_24h(self, request):
@@ -210,8 +212,8 @@ def importar_ambientes(request):
     df = pd.read_excel(arquivo)
 
     for _, row in df.iterrows():
-        local = Local.objects.get(nome=row['local'])
-        responsavel = Responsavel.objects.get(nome=row['responsavel'])
+        local = Local.objects.get(id=row['local'])
+        responsavel = Responsavel.objects.get(id=row['responsavel'])
 
         Ambiente.objects.create(
             local=local,

@@ -131,7 +131,6 @@ class SensorSerializer(serializers.ModelSerializer):
         ]
 
 
-
 class HistoricoSerializer(serializers.ModelSerializer):
     sensor_nome = serializers.CharField(source="sensor.sensor", read_only=True)
     unidade = serializers.CharField(source="sensor.unidade_med", read_only=True)
@@ -146,6 +145,14 @@ class HistoricoSerializer(serializers.ModelSerializer):
             'sensor_nome',
             'unidade'
         ]
+
+    def create(self, validated_data):
+        sensor = validated_data.get('sensor')
+
+        if not sensor.status:
+            raise serializers.ValidationError("Sensor inativo não pode receber medições")
+
+        return super().create(validated_data)
 
 
 class SensorDetailSerializer(serializers.ModelSerializer):
