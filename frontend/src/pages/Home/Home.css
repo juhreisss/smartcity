@@ -1,0 +1,207 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f7fb;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 250px;
+  background: #1e293b;
+  color: white;
+
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar h2 {
+  margin-bottom: 40px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  transition: 0.2s;
+}
+
+.sidebar a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.logout {
+  margin-top: 30px;
+
+  border: none;
+
+  background: red;
+
+  color: white;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+/* CONTENT */
+
+.content {
+  flex: 1;
+  padding: 40px;
+}
+
+/* USER INFO */
+
+.user-info {
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 16px;
+
+  margin-bottom: 30px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.user-info h3 {
+  margin-bottom: 5px;
+}
+
+.user-info span {
+  color: #3d5afe;
+  font-weight: bold;
+}
+
+/* CARDS */
+
+.cards {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 20px;
+
+  margin-top: 30px;
+}
+
+.card {
+  background: white;
+
+  padding: 25px;
+
+  border-radius: 20px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 28px;
+  font-weight: bold;
+
+  margin-bottom: 20px;
+}
+
+.card button {
+  width: 100%;
+
+  border: none;
+
+  background: #3d5afe;
+
+  color: white;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+/* CORES */
+
+.temp {
+  border-left: 6px solid #ff5252;
+}
+
+.umi {
+  border-left: 6px solid #2196f3;
+}
+
+.lux {
+  border-left: 6px solid #ffc107;
+}
+
+.cont {
+  border-left: 6px solid #4caf50;
+}
+
+/* ADMIN */
+
+.admin-actions {
+  margin-top: 30px;
+
+  display: flex;
+
+  gap: 15px;
+}
+
+.admin-actions button {
+  border: none;
+
+  background: #1e293b;
+
+  color: white;
+
+  padding: 14px 20px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+/* CHART */
+
+.chart-box {
+  margin-top: 40px;
+
+  background: white;
+
+  padding: 25px;
+
+  border-radius: 20px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}

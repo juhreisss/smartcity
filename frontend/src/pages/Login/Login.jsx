@@ -10,40 +10,62 @@ import Input from "../../components/Input";
 import api from "../../services/api";
 
 function Login() {
+
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
+
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
+
+    console.log(username, password);
+
     try {
-      console.log(username, password);
+
       const res = await api.post("/token/", {
-        username: username,
-        password: password
+        username,
+        password
       });
 
-    
-      localStorage.setItem("token", res.data.access);
+      // SALVA TOKEN
+      localStorage.setItem(
+        "token",
+        res.data.access
+      );
+
+      // 🔥 salva usuário fake temporário
+      localStorage.setItem(
+        "usuario",
+        JSON.stringify({
+          nome: username,
+          tipo: "Administrador"
+        })
+      );
 
       alert("Login realizado!");
+
       navigate("/home");
 
     } catch (err) {
-      alert("Usuário ou senha inválidos");
+
       console.log(err);
+
+      alert("Usuário ou senha inválidos");
+
     }
   };
 
   return (
+
     <div className="container">
+
       <Card>
 
         <h2>
           Bem vindo ao <span>SMART TECH</span>
         </h2>
 
-        {/* 🔥 IMPORTANTE: pegar valor */}
         <Input
           type="text"
           placeholder="Usuário"
@@ -57,15 +79,18 @@ function Login() {
         />
 
         <div className="options">
-          <span className="forgot">esqueci minha senha</span>
+          <span className="forgot">
+            esqueci minha senha
+          </span>
         </div>
 
-        <Button text="Entrar" onClick={handleLogin} />
+        <Button
+          text="Entrar"
+          onClick={handleLogin}
+        />
 
-        <p className="signup">
-          Não tem conta? <span>Criar uma conta</span>
-        </p>
       </Card>
+
     </div>
   );
 }
