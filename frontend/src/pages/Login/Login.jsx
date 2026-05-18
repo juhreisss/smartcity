@@ -19,31 +19,27 @@ function Login() {
 
   const handleLogin = async () => {
 
-    console.log(username, password);
-
     try {
 
-      const res = await api.post("/token/", {
-        username,
-        password
-      });
+      console.log(username, password);
 
-      // SALVA TOKEN
+      const res = await api.post(
+        "/token/",
+        {
+          username,
+          password
+        }
+      );
+
       localStorage.setItem(
         "token",
         res.data.access
       );
 
-      // 🔥 salva usuário fake temporário
       localStorage.setItem(
-        "usuario",
-        JSON.stringify({
-          nome: username,
-          tipo: "Administrador"
-        })
+        "refresh",
+        res.data.refresh
       );
-
-      alert("Login realizado!");
 
       navigate("/home");
 
@@ -52,42 +48,53 @@ function Login() {
       console.log(err);
 
       alert("Usuário ou senha inválidos");
-
     }
   };
 
   return (
 
-    <div className="container">
+    <div className="login-container">
 
       <Card>
 
-        <h2>
-          Bem vindo ao <span>SMART TECH</span>
+        <h2 className="titulo">
+          SmartCity Login
         </h2>
 
         <Input
           type="text"
           placeholder="Usuário"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) =>
+            setUsername(e.target.value)
+          }
         />
 
         <Input
           type="password"
           placeholder="Senha"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
         />
-
-        <div className="options">
-          <span className="forgot">
-            esqueci minha senha
-          </span>
-        </div>
 
         <Button
           text="Entrar"
           onClick={handleLogin}
         />
+
+        <p className="cadastro-link">
+
+          Não tem conta?
+
+          <span
+            onClick={() =>
+              navigate("/cadastro")
+            }
+          >
+            Cadastre-se
+          </span>
+
+        </p>
 
       </Card>
 

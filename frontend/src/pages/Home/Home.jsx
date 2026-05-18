@@ -41,21 +41,29 @@ function Home() {
 
     <div className="dashboard">
 
-      {/* SIDEBAR */}
-
       <aside className="sidebar">
 
-        <h2>SMART TECH</h2>
+        <h2 className="logo">
+          SMART TECH
+        </h2>
 
-        <nav>
+        <p className="subtitle">
+          Monitoramento Inteligente
+        </p>
 
-          <a href="#">Dashboard</a>
+        <nav className="menu">
 
-          <a href="#">Sensores</a>
+          <button className="menu-btn active">
+            🏠 Dashboard
+          </button>
 
-          <a href="#">Histórico</a>
+          <button className="menu-btn">
+            🌡️ Sensores
+          </button>
 
-          <a href="#">Gráficos</a>
+          <button className="menu-btn">
+            📈 Gráficos
+          </button>
 
         </nav>
 
@@ -63,92 +71,118 @@ function Home() {
           className="logout"
           onClick={logout}
         >
-          Sair
+          🚪 Sair
         </button>
 
       </aside>
 
-      {/* CONTEÚDO */}
-
       <main className="content">
 
-        {/* USUÁRIO */}
+        <div className="topbar">
 
-        <div className="user-info">
+          <div>
 
-          <h3>{usuario?.nome}</h3>
+            <h1>
+              Dashboard SmartCity
+            </h1>
 
-          <span>{usuario?.tipo}</span>
+            <p>
+              Monitoramento em tempo real
+            </p>
+
+          </div>
+
+          <div className="user-info">
+
+            <div>
+
+              <h3>{usuario?.nome}</h3>
+
+              <span>{usuario?.tipo}</span>
+
+            </div>
+
+          </div>
 
         </div>
-
-        <h1>Dashboard SmartCity</h1>
 
         {/* CARDS */}
 
         <div className="cards">
 
-          <div className="card temp">
+          <div className="card">
+
             <h3>🌡️ Temperatura</h3>
+
             <p>26°C</p>
 
-            <button>
+            <button
+              onClick={() =>
+                navigate("/sensor/temperatura")
+              }
+            >
               Ver Sensor
             </button>
+
           </div>
 
-          <div className="card umi">
+          <div className="card">
+
             <h3>💧 Umidade</h3>
+
             <p>58%</p>
 
-            <button>
+            <button
+              onClick={() =>
+                navigate("/sensor/umidade")
+              }
+            >
               Ver Sensor
             </button>
+
           </div>
 
-          <div className="card lux">
+          <div className="card">
+
             <h3>☀️ Luminosidade</h3>
+
             <p>850 lux</p>
 
-            <button>
+            <button
+              onClick={() =>
+                navigate("/sensor/luminosidade")
+              }
+            >
               Ver Sensor
             </button>
+
           </div>
 
-          <div className="card cont">
+          <div className="card">
+
             <h3>🔢 Contador</h3>
+
             <p>1450</p>
 
-            <button>
+            <button
+              onClick={() =>
+                navigate("/sensor/contador")
+              }
+            >
               Ver Sensor
             </button>
+
           </div>
 
         </div>
-
-        {/* BOTÕES ADMIN */}
-
-        {usuario?.tipo === "Administrador" && (
-
-          <div className="admin-actions">
-
-            <button>
-              ➕ Cadastrar Sensor
-            </button>
-
-            <button>
-              📥 Importar Planilha
-            </button>
-
-          </div>
-
-        )}
 
         {/* GRÁFICO */}
 
         <div className="chart-box">
 
-          <h2>Monitoramento</h2>
+          <h2>
+            Monitoramento Geral
+          </h2>
 
           <ResponsiveContainer
             width="100%"

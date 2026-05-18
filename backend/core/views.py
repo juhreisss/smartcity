@@ -4,6 +4,7 @@ from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .filters import *
+from rest_framework.views import APIView
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -222,3 +223,27 @@ def importar_ambientes(request):
         )
 
     return Response({"msg": "Ambientes importados"})
+
+    from rest_framework.views import APIView
+
+class RegisterView(APIView):
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+
+        serializer = RegisterSerializer(data=request.data)
+
+        if serializer.is_valid():
+
+            serializer.save()
+
+            return Response(
+                {"message": "Usuário criado com sucesso"},
+                status=status.HTTP_201_CREATED
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )

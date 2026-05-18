@@ -1,0 +1,75 @@
+.cadastro-container {
+
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background-size: cover;
+
+  background-position: center;
+
+  background-repeat: no-repeat;
+}
+
+.titulo {
+
+  text-align: center;
+
+  margin-bottom: 25px;
+
+  color: #333;
+
+  font-size: 32px;
+}
+
+.select {
+
+  width: 100%;
+
+  padding: 14px;
+
+  margin-top: 15px;
+
+  border-radius: 10px;
+
+  border: 1px solid #ccc;
+
+  font-size: 15px;
+
+  outline: none;
+}
+
+.voltar {
+
+  margin-top: 20px;
+
+  text-align: center;
+
+  font-size: 14px !important;
+
+  color: #666;
+
+  font-weight: normal;
+}
+
+.voltar span {
+
+  color: #3d5afe;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  margin-left: 5px;
+
+  font-size: 14px !important;
+}
+
+.voltar span:hover {
+
+  text-decoration: underline;
+}

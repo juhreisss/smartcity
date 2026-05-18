@@ -1,27 +1,38 @@
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login/Login";
+import Cadastro from "./pages/Cadastro/Cadastro";
 import Home from "./pages/Home/Home";
-
-import PrivateRoute from "./routes/PrivateRoute";
+import Sensor from "./pages/Sensor/Sensor";
 
 function App() {
 
   return (
-    <Routes>
 
-      <Route path="/" element={<Login />} />
+    <BrowserRouter>
 
-      <Route
-        path="/home"
-        element={
-          <PrivateRoute>
-            <Home />
-          </PrivateRoute>
-        }
-      />
+      <Routes>
 
-    </Routes>
+        <Route path="/" element={<Login />} />
+
+        <Route
+          path="/cadastro"
+          element={<Cadastro />}
+        />
+
+        <Route
+          path="/home"
+          element={<Home />}
+        />
+
+        <Route
+          path="/sensor/:tipo"
+          element={<Sensor />}
+        />
+
+      </Routes>
+
+    </BrowserRouter>
   );
 }
 

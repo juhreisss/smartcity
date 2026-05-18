@@ -19,7 +19,7 @@ urlpatterns = [
 
 path('token/', TokenObtainPairView.as_view(), name='token'),
 path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
+path('register/', RegisterView.as_view(), name='register'),
 path('', include(router.urls)),
 
 
