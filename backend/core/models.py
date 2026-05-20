@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Usuario(models.Model):
     TIPO_CHOICES = [
         ('ADMIN', 'Administrador'),
-        ('USER', 'Usuário'),
+        ('USUARIO', 'Usuário'),
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')

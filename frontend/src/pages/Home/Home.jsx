@@ -9,7 +9,9 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
+  AreaChart,
+  Area
 } from "recharts";
 
 function Home() {
@@ -41,66 +43,99 @@ function Home() {
 
     <div className="dashboard">
 
+      {/* SIDEBAR */}
+
       <aside className="sidebar">
 
-        <h2 className="logo">
-          SMART TECH
-        </h2>
+        <div>
 
-        <p className="subtitle">
-          Monitoramento Inteligente
-        </p>
+          <div className="logo-box">
+
+            <h1 className="logo">
+              SMARTCITY
+            </h1>
+
+
+          </div>
+
+
+        </div>
 
         <nav className="menu">
 
-          <button className="menu-btn active">
-            🏠 Dashboard
+          <button
+            className="menu-btn active"
+          >
+            Dashboard
           </button>
 
-          <button className="menu-btn">
-            🌡️ Sensores
+          <button
+            className="menu-btn"
+            onClick={() =>
+              navigate("/cadastro")
+            }
+          >
+            Área de Cadastro
           </button>
 
-          <button className="menu-btn">
-            📈 Gráficos
+          <button
+            className="menu-btn"
+          >
+            Gráficos
           </button>
 
         </nav>
 
-        <button
-          className="logout"
-          onClick={logout}
-        >
-          🚪 Sair
-        </button>
+        <div className="sidebar-footer">
+
+          <div className="perfil-box">
+
+            <div className="perfil-circle">
+              {usuario?.nome?.[0]}
+            </div>
+
+            <div>
+
+              <h3>
+                {usuario?.nome}
+              </h3>
+
+              <span>
+                {usuario?.tipo}
+              </span>
+
+            </div>
+
+          </div>
+
+          <button
+            className="logout"
+            onClick={logout}
+          >
+            Sair do Sistema
+          </button>
+
+        </div>
 
       </aside>
 
+      {/* CONTEÚDO */}
+
       <main className="content">
+
+        {/* HEADER */}
 
         <div className="topbar">
 
           <div>
 
             <h1>
-              Dashboard SmartCity
+              Dashboard Inteligente
             </h1>
 
             <p>
-              Monitoramento em tempo real
+              Controle total dos sensores da SMARTECH
             </p>
-
-          </div>
-
-          <div className="user-info">
-
-            <div>
-
-              <h3>{usuario?.nome}</h3>
-
-              <span>{usuario?.tipo}</span>
-
-            </div>
 
           </div>
 
@@ -110,11 +145,15 @@ function Home() {
 
         <div className="cards">
 
-          <div className="card">
+          <div className="card card-temp">
 
-            <h3>🌡️ Temperatura</h3>
+            <div>
 
-            <p>26°C</p>
+              <h3>Temperatura</h3>
+
+              <p>26°C</p>
+
+            </div>
 
             <button
               onClick={() =>
@@ -126,11 +165,15 @@ function Home() {
 
           </div>
 
-          <div className="card">
+          <div className="card card-umi">
 
-            <h3>💧 Umidade</h3>
+            <div>
 
-            <p>58%</p>
+              <h3>Umidade</h3>
+
+              <p>58%</p>
+
+            </div>
 
             <button
               onClick={() =>
@@ -142,11 +185,15 @@ function Home() {
 
           </div>
 
-          <div className="card">
+          <div className="card card-lux">
 
-            <h3>☀️ Luminosidade</h3>
+            <div>
 
-            <p>850 lux</p>
+              <h3>Luminosidade</h3>
+
+              <p>850 lux</p>
+
+            </div>
 
             <button
               onClick={() =>
@@ -158,11 +205,15 @@ function Home() {
 
           </div>
 
-          <div className="card">
+          <div className="card card-cont">
 
-            <h3>🔢 Contador</h3>
+            <div>
 
-            <p>1450</p>
+              <h3>Contador</h3>
+
+              <p>1450</p>
+
+            </div>
 
             <button
               onClick={() =>
@@ -176,42 +227,130 @@ function Home() {
 
         </div>
 
-        {/* GRÁFICO */}
+        {/* GRID */}
 
-        <div className="chart-box">
+        <div className="dashboard-grid">
 
-          <h2>
-            Monitoramento Geral
-          </h2>
+          {/* GRÁFICO */}
 
-          <ResponsiveContainer
-            width="100%"
-            height={300}
-          >
+          <div className="chart-box">
 
-            <LineChart data={data}>
+            <div className="box-header">
 
-              <CartesianGrid strokeDasharray="3 3" />
+              <h2 className="titulo-grafico">
+               Monitoramento Geral
+                </h2>
 
-              <XAxis dataKey="hora" />
+              <span>
+                Últimas 24h
+              </span>
 
-              <YAxis />
+            </div>
 
-              <Tooltip />
+            <ResponsiveContainer
+              width="100%"
+              height={300}
+            >
 
-              <Line
-                type="monotone"
-                dataKey="temp"
-              />
+              <LineChart data={data}>
 
-              <Line
-                type="monotone"
-                dataKey="umi"
-              />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="#2b3655"
+                />
 
-            </LineChart>
+                <XAxis dataKey="hora" />
 
-          </ResponsiveContainer>
+                <YAxis />
+
+                <Tooltip />
+
+                <Line
+                  type="monotone"
+                  dataKey="temp"
+                  stroke="#7c5cff"
+                  strokeWidth={3}
+                />
+
+                <Line
+                  type="monotone"
+                  dataKey="umi"
+                  stroke="#00d4ff"
+                  strokeWidth={3}
+                />
+
+              </LineChart>
+
+            </ResponsiveContainer>
+
+          </div>
+
+
+        </div>
+
+        {/* ÁREA INFERIOR */}
+
+        <div className="bottom-grid">
+
+          <div className="mini-chart">
+
+            <div className="box-header">
+
+              
+
+            </div>
+
+            <ResponsiveContainer
+              width="100%"
+              height={180}
+            >
+
+              <AreaChart data={data}>
+
+                <defs>
+
+                  <linearGradient
+                    id="colorTemp"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+
+                    <stop
+                      offset="5%"
+                      stopColor="#7c5cff"
+                      stopOpacity={0.8}
+                    />
+
+                    <stop
+                      offset="95%"
+                      stopColor="#7c5cff"
+                      stopOpacity={0}
+                    />
+
+                  </linearGradient>
+
+                </defs>
+
+                <XAxis dataKey="hora" />
+
+                <Tooltip />
+
+                <Area
+                  type="monotone"
+                  dataKey="temp"
+                  stroke="#7c5cff"
+                  fillOpacity={1}
+                  fill="url(#colorTemp)"
+                />
+
+              </AreaChart>
+
+            </ResponsiveContainer>
+
+          </div>
+
 
         </div>
 

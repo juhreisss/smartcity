@@ -26,7 +26,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = [
-            'id', 'user', 'nome', 'telefone', 'tipo'
+            'id', 'nome', 'telefone', 'tipo'
         ]
 
 
@@ -132,11 +132,20 @@ class SensorSerializer(serializers.ModelSerializer):
 
 
 class HistoricoSerializer(serializers.ModelSerializer):
-    sensor_nome = serializers.CharField(source="sensor.sensor", read_only=True)
-    unidade = serializers.CharField(source="sensor.unidade_med", read_only=True)
+
+    sensor_nome = serializers.CharField(
+        source="sensor.sensor",
+        read_only=True
+    )
+
+    unidade = serializers.CharField(
+        source="sensor.unidade_med",
+        read_only=True
+    )
 
     class Meta:
         model = Historico
+
         fields = [
             'id',
             'sensor',
@@ -144,31 +153,4 @@ class HistoricoSerializer(serializers.ModelSerializer):
             'timestamp',
             'sensor_nome',
             'unidade'
-        ]
-
-    def create(self, validated_data):
-        sensor = validated_data.get('sensor')
-
-        if not sensor.status:
-            raise serializers.ValidationError("Sensor inativo não pode receber medições")
-
-        return super().create(validated_data)
-
-
-class SensorDetailSerializer(serializers.ModelSerializer):
-    historicos = HistoricoSerializer(many=True, read_only=True)
-    micro_modelo = serializers.CharField(source="mic.modelo", read_only=True)
-    ambiente_nome = serializers.CharField(source="mic.ambiente.descricao", read_only=True)
-
-    class Meta:
-        model = Sensor
-        fields = [
-            'id',
-            'sensor',
-            'unidade_med',
-            'mic',
-            'status',
-            'micro_modelo',
-            'ambiente_nome',
-            'historicos'
         ]

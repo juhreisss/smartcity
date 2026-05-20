@@ -3,31 +3,69 @@ import "./Sensor.css";
 import { useParams } from "react-router-dom";
 
 import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer
-} from "recharts";
+  useEffect,
+  useState
+} from "react";
 
-import { useState } from "react";
+import api from "../../services/api";
 
 function Sensor() {
 
   const { tipo } = useParams();
 
+  /* ================= USUARIO ================= */
+
+  const usuario =
+    JSON.parse(
+      localStorage.getItem("usuario")
+    );
+
+  /* ADMIN */
+
+  const isAdmin =
+    usuario?.tipo === "ADMIN";
+
+  /* STATES */
+
   const [arquivo, setArquivo] =
     useState(null);
 
-  const data = [
-    { hora: "08h", valor: 20 },
-    { hora: "10h", valor: 24 },
-    { hora: "12h", valor: 26 },
-    { hora: "14h", valor: 28 },
-    { hora: "16h", valor: 25 },
-  ];
+  const [sensores, setSensores] =
+    useState([]);
+
+  const [novoSensor, setNovoSensor] =
+    useState({
+      unidade_med: "",
+      mic: ""
+    });
+
+  /* ================= CARREGAR ================= */
+
+  const carregarSensores =
+    async () => {
+
+      try {
+
+        const response =
+          await api.get(
+            `/sensores/por_tipo/?tipo=${tipo}`
+          );
+
+        setSensores(response.data);
+
+      } catch (err) {
+
+        console.log(err);
+      }
+    };
+
+  useEffect(() => {
+
+    carregarSensores();
+
+  }, []);
+
+  /* ================= IMPORTAR ================= */
 
   const importarPlanilha =
     async () => {
@@ -56,181 +94,152 @@ function Sensor() {
             "token"
           );
 
-        console.log(
-          "TOKEN:",
-          token
+        await fetch(
+          "http://127.0.0.1:8000/api/importar-sensores/",
+          {
+            method: "POST",
+
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+            },
+
+            body: formData,
+          }
         );
 
-        const response =
-          await fetch(
-            "http://127.0.0.1:8000/api/importar-historico/",
-            {
+        alert(
+          "Planilha importada!"
+        );
 
-              method: "POST",
-
-              headers: {
-                Authorization:
-                  `Bearer ${token}`,
-              },
-
-              body: formData,
-            }
-          );
-
-        console.log(response);
-
-        if (response.ok) {
-
-          alert(
-            "Planilha importada!"
-          );
-
-        } else {
-
-          alert(
-            "Erro ao importar"
-          );
-
-          console.log(
-            await response.text()
-          );
-        }
+        carregarSensores();
 
       } catch (err) {
 
         console.log(err);
 
         alert(
-          "Erro no sistema"
+          "Erro ao importar"
         );
       }
     };
 
-  return (
+  /* ================= EXCLUIR ================= */
 
-    <div className="sensor-page">
+  const excluirSensor =
+    async (id) => {
 
-      <div className="sensor-header">
+      const confirmar =
+        window.confirm(
+          "Deseja excluir esse sensor?"
+        );
 
-        <div>
+      if (!confirmar) return;
 
-          <h1>
-            Sensor de {tipo}
-          </h1>
+      try {
 
-          <p>
-            Monitoramento e importação
-          </p>
+        await api.delete(
+          `/sensores/${id}/`
+        );
 
-        </div>
+        carregarSensores();
 
-        <div className="import-box">
+      } catch (err) {
 
-          <input
-            type="file"
-            onChange={(e) =>
-              setArquivo(
-                e.target.files[0]
-              )
-            }
-          />
+        console.log(err);
 
-          <button
-            onClick={
-              importarPlanilha
-            }
-          >
-            Importar XLSX
-          </button>
+        alert(
+          "Erro ao excluir"
+        );
+      }
+    };
 
-        </div>
+  /* ================= EDITAR ================= */
 
-      </div>
+  const editarSensor =
+    async (sensor) => {
 
-      <div className="chart-box">
+      const novaUnidade =
+        prompt(
+          "Nova unidade:",
+          sensor.unidade_med
+        );
 
-        <ResponsiveContainer
-          width="100%"
-          height={300}
-        >
+      if (!novaUnidade) return;
 
-          <LineChart data={data}>
+      try {
 
-            <CartesianGrid
-              strokeDasharray="3 3"
-            />
+        await api.patch(
+          `/sensores/${sensor.id}/`,
+          {
+            unidade_med:
+              novaUnidade
+          }
+        );
 
-            <XAxis dataKey="hora" />
+        carregarSensores();
 
-            <YAxis />
+      } catch (err) {
 
-            <Tooltip />
+        console.log(err);
 
-            <Line
-              type="monotone"
-              dataKey="valor"
-            />
+        alert(
+          "Erro ao editar"
+        );
+      }
+    };
 
-          </LineChart>
+  /* ================= CADASTRAR ================= */
 
-        </ResponsiveContainer>
+  const cadastrarSensor =
+    async () => {
 
-      </div>
+      if (
+        !novoSensor.unidade_med ||
+        !novoSensor.mic
+      ) {
 
-      <div className="table-box">
+        alert(
+          "Preencha todos os campos"
+        );
 
-        <table>
+        return;
+      }
 
-          <thead>
+      try {
 
-            <tr>
+        await api.post(
+          "/sensores/",
+          {
+            sensor: tipo,
+            unidade_med:
+              novoSensor.unidade_med,
+            mic:
+              novoSensor.mic,
+            status: true
+          }
+        );
 
-              <th>ID</th>
+        alert(
+          "Sensor cadastrado!"
+        );
 
-              <th>Sensor</th>
+        setNovoSensor({
+          unidade_med: "",
+          mic: ""
+        });
 
-              <th>Valor</th>
+        carregarSensores();
 
-              <th>Data</th>
+      } catch (err) {
 
-            </tr>
+        console.log(err);
 
-          </thead>
+        alert(
+          "Erro ao cadastrar"
+        );
+      }
+    };
+  }
+    export default Sensor;
 
-          <tbody>
-
-            <tr>
-
-              <td>1</td>
-
-              <td>{tipo}</td>
-
-              <td>26</td>
-
-              <td>18/05/2026</td>
-
-            </tr>
-
-            <tr>
-
-              <td>2</td>
-
-              <td>{tipo}</td>
-
-              <td>28</td>
-
-              <td>18/05/2026</td>
-
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-  );
-}
-
-export default Sensor;

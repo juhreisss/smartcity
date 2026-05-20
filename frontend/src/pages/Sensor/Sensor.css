@@ -1,99 +1,440 @@
-.sensor-page {
+.sensor-page{
+    min-height:100vh;
+    padding:40px;
 
-  min-height: 100vh;
+    background:
+    radial-gradient(circle at top right,#2563eb22,transparent 25%),
+    radial-gradient(circle at bottom left,#06b6d422,transparent 20%),
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #111827,
+        #1e293b
+    );
 
-  background: #f4f7fb;
-
-  padding: 40px;
+    color:white;
+    font-family:'Segoe UI',sans-serif;
 }
 
-.sensor-header {
+/* HEADER */
 
-  display: flex;
+.sensor-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-  justify-content: space-between;
+    margin-bottom:35px;
 
-  align-items: center;
+    padding:30px;
 
-  margin-bottom: 30px;
+    border-radius:28px;
+
+    background:rgba(255,255,255,0.06);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(14px);
 }
 
-.sensor-header h1 {
-
-  font-size: 40px;
-
-  text-transform: capitalize;
+.sensor-header h1{
+    font-size:40px;
+    color:#60a5fa;
+    margin-bottom:10px;
 }
 
-.import-box {
-
-  display: flex;
-
-  gap: 15px;
+.sensor-header p{
+    color:#cbd5e1;
 }
 
-.import-box button {
+/* IMPORT */
 
-  background: #2563eb;
+.import-box{
+    display:flex;
+    align-items:center;
+    gap:15px;
 
-  border: none;
+    background:rgba(255,255,255,0.05);
 
-  color: white;
+    padding:18px;
 
-  padding: 14px 20px;
-
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  font-weight: bold;
+    border-radius:18px;
 }
 
-.chart-box {
+.custom-file-upload{
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #06b6d4
+    );
 
-  background: white;
+    padding:14px 22px;
 
-  padding: 30px;
+    border-radius:14px;
 
-  border-radius: 20px;
+    cursor:pointer;
 
-  margin-bottom: 30px;
-
-  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    font-weight:bold;
 }
 
-.table-box {
-
-  background: white;
-
-  padding: 25px;
-
-  border-radius: 20px;
-
-  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+.custom-file-upload input{
+    display:none;
 }
 
-table {
+.file-name{
+    color:#cbd5e1;
+    max-width:200px;
 
-  width: 100%;
-
-  border-collapse: collapse;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
-th {
+.import-btn{
+    border:none;
 
-  background: #2563eb;
+    padding:14px 22px;
 
-  color: white;
+    border-radius:14px;
 
-  padding: 15px;
+    background:#2563eb;
 
-  text-align: left;
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
 }
 
-td {
+/* CARDS */
 
-  padding: 15px;
+.cards{
+    display:grid;
 
-  border-bottom: 1px solid #eee;
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:25px;
+
+    margin-bottom:35px;
+}
+
+.card{
+    background:rgba(255,255,255,0.06);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    padding:28px;
+
+    border-radius:24px;
+
+    backdrop-filter:blur(12px);
+
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h2{
+    color:#cbd5e1;
+    margin-bottom:12px;
+}
+
+.card h1{
+    font-size:42px;
+    color:#60a5fa;
+}
+
+/* CADASTRO */
+
+.cadastro-box{
+    margin-bottom:35px;
+
+    background:rgba(255,255,255,0.06);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    padding:28px;
+
+    border-radius:24px;
+}
+
+.cadastro-box h2{
+    margin-bottom:20px;
+    color:#60a5fa;
+}
+
+.cadastro-form{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.cadastro-form input,
+.cadastro-form select{
+    flex:1;
+
+    min-width:180px;
+
+    background:#0f172a;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    color:white;
+
+    padding:14px;
+
+    border-radius:14px;
+}
+
+.cadastro-form button{
+    border:none;
+
+    padding:14px 24px;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #06b6d4
+    );
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* TABELA */
+
+.table-box{
+    background:rgba(255,255,255,0.06);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    padding:30px;
+
+    border-radius:28px;
+}
+
+.table-box h2{
+    margin-bottom:25px;
+    color:#60a5fa;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#2563eb;
+}
+
+thead th{
+    padding:18px;
+    text-align:left;
+}
+
+tbody tr{
+    background:rgba(255,255,255,0.04);
+}
+
+tbody tr:hover{
+    background:rgba(96,165,250,0.12);
+}
+
+tbody td{
+    padding:18px;
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.06);
+}
+
+/* STATUS */
+
+.status-ativo{
+    background:#16a34a22;
+    color:#4ade80;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-weight:bold;
+}
+
+.status-inativo{
+    background:#dc262622;
+    color:#f87171;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-weight:bold;
+}
+
+/* AÇÕES */
+
+.acoes{
+    display:flex;
+    gap:10px;
+}
+
+.edit-btn,
+.delete-btn{
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:12px;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:0.3s;
+}
+
+.edit-btn{
+    background:#2563eb;
+}
+
+.delete-btn{
+    background:#dc2626;
+}
+
+.edit-btn:hover,
+.delete-btn:hover{
+    transform:scale(1.08);
+}
+
+/* SEM DADOS */
+
+.sem-dados{
+    text-align:center;
+    padding:30px;
+    color:#94a3b8;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:900px){
+
+    .sensor-page{
+        padding:20px;
+    }
+
+    .sensor-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+
+    .import-box{
+        width:100%;
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .cadastro-form{
+        flex-direction:column;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+    }
+}
+
+/* AÇÕES */
+
+.acoes{
+    display:flex;
+    gap:10px;
+}
+
+.edit-btn,
+.delete-btn{
+    border:none;
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:18px;
+    transition:0.3s;
+}
+
+.edit-btn{
+    background:#2563eb;
+    color:white;
+}
+
+.edit-btn:hover{
+    transform:scale(1.08);
+    background:#1d4ed8;
+}
+
+.delete-btn{
+    background:#dc2626;
+    color:white;
+}
+
+.delete-btn:hover{
+    transform:scale(1.08);
+    background:#b91c1c;
+}
+
+/* CADASTRO */
+
+.cadastro-box{
+    margin-bottom:35px;
+    padding:30px;
+    border-radius:24px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+}
+
+.cadastro-box h2{
+    margin-bottom:20px;
+    color:#60a5fa;
+}
+
+.cadastro-form{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.cadastro-form input{
+    flex:1;
+    min-width:220px;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    outline:none;
+}
+
+.cadastro-form button{
+    padding:14px 24px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #06b6d4
+    );
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
 }
