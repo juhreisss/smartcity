@@ -1,6 +1,7 @@
 import "./Login.css";
 
 import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 
 import Card from "../../components/Card";
@@ -12,7 +13,8 @@ import api from "../../services/api";
 
 function Login() {
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
   const [username, setUsername] =
     useState("");
@@ -20,56 +22,56 @@ function Login() {
   const [password, setPassword] =
     useState("");
 
-  const handleLogin = async () => {
+  const handleLogin =
+    async () => {
 
-    try {
+      try {
 
-      const res = await api.post(
-        "/token/",
-        {
-          username,
-          password
-        }
-      );
+        const res =
+          await api.post(
+            "/token/",
+            {
+              username,
+              password
+            }
+          );
 
-      localStorage.setItem(
-        "token",
-        res.data.access
-      );
+        localStorage.setItem(
+          "token",
+          res.data.access
+        );
 
-      localStorage.setItem(
-        "refresh",
-        res.data.refresh
-      );
+        localStorage.setItem(
+          "refresh",
+          res.data.refresh
+        );
 
-      /* SALVAR USUÁRIO */
+        localStorage.setItem(
+          "usuario",
 
-      localStorage.setItem(
-        "usuario",
+          JSON.stringify({
 
-        JSON.stringify({
+            username,
 
-          username,
+            tipo:
+              username === "senai"
+                ? "ADMIN"
+                : "USUARIO"
 
-          tipo:
-            username === "senai"
-              ? "ADMIN"
-              : "USUARIO"
+          })
+        );
 
-        })
-      );
+        navigate("/home");
 
-      navigate("/home");
+      } catch (err) {
 
-    } catch (err) {
+        console.log(err);
 
-      console.log(err);
-
-      alert(
-        "Usuário ou senha inválidos"
-      );
-    }
-  };
+        alert(
+          "Usuário ou senha inválidos"
+        );
+      }
+    };
 
   return (
 
@@ -103,7 +105,8 @@ function Login() {
           </h2>
 
           <p className="subtitulo">
-            Plataforma inteligente de sensores
+            Plataforma inteligente
+            de sensores
           </p>
 
         </div>
@@ -111,6 +114,9 @@ function Login() {
         <Input
           type="text"
           placeholder="Usuário"
+
+          value={username}
+
           onChange={(e) =>
             setUsername(
               e.target.value
@@ -121,6 +127,9 @@ function Login() {
         <Input
           type="password"
           placeholder="Senha"
+
+          value={password}
+
           onChange={(e) =>
             setPassword(
               e.target.value
@@ -134,14 +143,6 @@ function Login() {
         >
           Entrar
         </button>
-
-        <div className="extra-options">
-
-          <span className="esqueci">
-            Esqueceu sua senha?
-          </span>
-
-        </div>
 
         <p className="cadastro-link">
 

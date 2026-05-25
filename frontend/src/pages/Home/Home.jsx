@@ -23,18 +23,48 @@ function Home() {
   );
 
   const data = [
-    { hora: "08h", temp: 22, umi: 55 },
-    { hora: "10h", temp: 24, umi: 58 },
-    { hora: "12h", temp: 27, umi: 52 },
-    { hora: "14h", temp: 29, umi: 48 },
-    { hora: "16h", temp: 26, umi: 60 },
+
+    {
+      hora: "08h",
+      temp: 22,
+      umi: 55
+    },
+
+    {
+      hora: "10h",
+      temp: 24,
+      umi: 58
+    },
+
+    {
+      hora: "12h",
+      temp: 27,
+      umi: 52
+    },
+
+    {
+      hora: "14h",
+      temp: 29,
+      umi: 48
+    },
+
+    {
+      hora: "16h",
+      temp: 26,
+      umi: 60
+    },
+
   ];
 
   const logout = () => {
 
-    localStorage.removeItem("token");
+    localStorage.removeItem(
+      "token"
+    );
 
-    localStorage.removeItem("usuario");
+    localStorage.removeItem(
+      "usuario"
+    );
 
     navigate("/");
   };
@@ -47,77 +77,86 @@ function Home() {
 
       <aside className="sidebar">
 
-        <div>
+  {/* TOPO */}
 
-          <div className="logo-box">
+  <div className="sidebar-top">
 
-            <h1 className="logo">
-              SMARTCITY
-            </h1>
+    <div className="logo-box">
 
+      <h1 className="logo">
+        SMARTCITY
+      </h1>
 
-          </div>
+      <p>
+        Sistema Inteligente
+      </p>
 
+    </div>
 
-        </div>
+    <nav className="menu">
 
-        <nav className="menu">
+      <button
+        className="menu-btn active"
+      >
+        Dashboard
+      </button>
 
-          <button
-            className="menu-btn active"
-          >
-            Dashboard
-          </button>
+      <button
+        className="menu-btn"
+        onClick={() =>
+          navigate("/cadastro")
+        }
+      >
+        Área de Cadastro
+      </button>
 
-          <button
-            className="menu-btn"
-            onClick={() =>
-              navigate("/cadastro")
-            }
-          >
-            Área de Cadastro
-          </button>
+      <button
+        className="menu-btn"
+        onClick={() =>
+          navigate("/graficos")
+        }
+      >
+        Gráficos
+      </button>
 
-          <button
-            className="menu-btn"
-          >
-            Gráficos
-          </button>
+    </nav>
 
-        </nav>
+  </div>
 
-        <div className="sidebar-footer">
+  {/* RODAPÉ */}
 
-          <div className="perfil-box">
+  <div className="sidebar-footer">
 
-            <div className="perfil-circle">
-              {usuario?.nome?.[0]}
-            </div>
+    <div className="perfil-box">
 
-            <div>
+      <div className="perfil-circle">
+        {usuario?.nome?.[0]}
+      </div>
 
-              <h3>
-                {usuario?.nome}
-              </h3>
+      <div>
 
-              <span>
-                {usuario?.tipo}
-              </span>
+        <h3>
+          {usuario?.nome}
+        </h3>
 
-            </div>
+        <span>
+          {usuario?.tipo}
+        </span>
 
-          </div>
+      </div>
 
-          <button
-            className="logout"
-            onClick={logout}
-          >
-            Sair do Sistema
-          </button>
+    </div>
 
-        </div>
+    <button
+      className="logout"
+      onClick={logout}
+    >
+      Sair do Sistema
+    </button>
 
-      </aside>
+  </div>
+
+</aside>
 
       {/* CONTEÚDO */}
 
@@ -145,13 +184,19 @@ function Home() {
 
         <div className="cards">
 
+          {/* TEMPERATURA */}
+
           <div className="card card-temp">
 
             <div>
 
-              <h3>Temperatura</h3>
+              <h3>
+                Temperatura
+              </h3>
 
-              <p>26°C</p>
+              <p>
+                26°C
+              </p>
 
             </div>
 
@@ -165,13 +210,19 @@ function Home() {
 
           </div>
 
+          {/* UMIDADE */}
+
           <div className="card card-umi">
 
             <div>
 
-              <h3>Umidade</h3>
+              <h3>
+                Umidade
+              </h3>
 
-              <p>58%</p>
+              <p>
+                58%
+              </p>
 
             </div>
 
@@ -185,13 +236,19 @@ function Home() {
 
           </div>
 
+          {/* LUMINOSIDADE */}
+
           <div className="card card-lux">
 
             <div>
 
-              <h3>Luminosidade</h3>
+              <h3>
+                Luminosidade
+              </h3>
 
-              <p>850 lux</p>
+              <p>
+                850 lux
+              </p>
 
             </div>
 
@@ -205,13 +262,19 @@ function Home() {
 
           </div>
 
+          {/* CONTADOR */}
+
           <div className="card card-cont">
 
             <div>
 
-              <h3>Contador</h3>
+              <h3>
+                Contador
+              </h3>
 
-              <p>1450</p>
+              <p>
+                1450
+              </p>
 
             </div>
 
@@ -227,19 +290,19 @@ function Home() {
 
         </div>
 
-        {/* GRID */}
+        {/* GRID PRINCIPAL */}
 
         <div className="dashboard-grid">
 
-          {/* GRÁFICO */}
+          {/* GRÁFICO PRINCIPAL */}
 
           <div className="chart-box">
 
             <div className="box-header">
 
               <h2 className="titulo-grafico">
-               Monitoramento Geral
-                </h2>
+                Monitoramento Geral
+              </h2>
 
               <span>
                 Últimas 24h
@@ -285,7 +348,6 @@ function Home() {
 
           </div>
 
-
         </div>
 
         {/* ÁREA INFERIOR */}
@@ -296,7 +358,13 @@ function Home() {
 
             <div className="box-header">
 
-              
+              <h2>
+                Temperatura Média
+              </h2>
+
+              <span>
+                Hoje
+              </span>
 
             </div>
 
@@ -350,7 +418,6 @@ function Home() {
             </ResponsiveContainer>
 
           </div>
-
 
         </div>
 

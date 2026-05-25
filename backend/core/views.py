@@ -28,9 +28,6 @@ from .filters import *
 from .permissions import IsAdminOrReadOnly
 
 
-# =========================
-# USUÁRIOS
-# =========================
 
 class UsuarioViewSet(ModelViewSet):
 
@@ -91,10 +88,6 @@ class UsuarioViewSet(ModelViewSet):
         ])
 
 
-# =========================
-# LOCAIS
-# =========================
-
 class LocalViewSet(ModelViewSet):
 
     queryset = Local.objects.all()
@@ -107,9 +100,7 @@ class LocalViewSet(ModelViewSet):
     ]
 
 
-# =========================
-# RESPONSÁVEIS
-# =========================
+
 
 class ResponsavelViewSet(ModelViewSet):
 
@@ -123,9 +114,7 @@ class ResponsavelViewSet(ModelViewSet):
     ]
 
 
-# =========================
-# AMBIENTES
-# =========================
+
 
 class AmbienteViewSet(ModelViewSet):
 
@@ -143,9 +132,6 @@ class AmbienteViewSet(ModelViewSet):
     filterset_class = AmbienteFilter
 
 
-# =========================
-# MICROCONTROLADORES
-# =========================
 
 class MicrocontroladorViewSet(ModelViewSet):
 
@@ -177,9 +163,6 @@ class MicrocontroladorViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-# =========================
-# SENSORES
-# =========================
 
 class SensorViewSet(ModelViewSet):
 
@@ -229,9 +212,6 @@ class SensorViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-# =========================
-# HISTÓRICO
-# =========================
 
 class HistoricoViewSet(ModelViewSet):
 
@@ -267,9 +247,6 @@ class HistoricoViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-# =========================
-# IMPORTAR LOCAIS
-# =========================
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -290,9 +267,7 @@ def importar_locais(request):
     })
 
 
-# =========================
-# IMPORTAR RESPONSÁVEIS
-# =========================
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -313,9 +288,6 @@ def importar_responsaveis(request):
     })
 
 
-# =========================
-# IMPORTAR AMBIENTES
-# =========================
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -349,9 +321,6 @@ def importar_ambientes(request):
     })
 
 
-# =========================
-# IMPORTAR MICROCONTROLADORES
-# =========================
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -387,9 +356,6 @@ def importar_microcontroladores(request):
     })
 
 
-# =========================
-# IMPORTAR SENSORES
-# =========================
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -428,9 +394,6 @@ def importar_sensores(request):
     })
 
 
-# =========================
-# IMPORTAR HISTÓRICO
-# =========================
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -467,9 +430,6 @@ def importar_historico(request):
     })
 
 
-# =========================
-# REGISTER
-# =========================
 
 class RegisterView(APIView):
 

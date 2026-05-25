@@ -1,13 +1,15 @@
+/* ================= PAGE ================= */
+
 .sensor-page{
     min-height:100vh;
     padding:40px;
 
     background:
-    radial-gradient(circle at top right,#2563eb22,transparent 25%),
-    radial-gradient(circle at bottom left,#06b6d422,transparent 20%),
+    radial-gradient(circle at top right,#2563eb25,transparent 25%),
+    radial-gradient(circle at bottom left,#06b6d425,transparent 20%),
     linear-gradient(
         135deg,
-        #0f172a,
+        #0b1120,
         #111827,
         #1e293b
     );
@@ -16,64 +18,81 @@
     font-family:'Segoe UI',sans-serif;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 .sensor-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:25px;
 
     margin-bottom:35px;
 
-    padding:30px;
+    padding:35px;
 
-    border-radius:28px;
+    border-radius:30px;
 
-    background:rgba(255,255,255,0.06);
+    background:rgba(255,255,255,0.05);
 
     border:1px solid rgba(255,255,255,0.08);
 
-    backdrop-filter:blur(14px);
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,0.35);
 }
 
 .sensor-header h1{
-    font-size:40px;
-    color:#60a5fa;
+    font-size:42px;
+    font-weight:800;
     margin-bottom:10px;
+    color:#60a5fa;
 }
 
 .sensor-header p{
     color:#cbd5e1;
+    font-size:15px;
 }
 
-/* IMPORT */
+/* ================= IMPORTAÇÃO ================= */
 
 .import-box{
     display:flex;
     align-items:center;
-    gap:15px;
+    gap:14px;
 
-    background:rgba(255,255,255,0.05);
+    background:rgba(255,255,255,0.04);
 
     padding:18px;
 
-    border-radius:18px;
+    border-radius:22px;
+
+    border:1px solid rgba(255,255,255,0.06);
 }
 
 .custom-file-upload{
     background:linear-gradient(
-        90deg,
+        135deg,
         #2563eb,
-        #06b6d4
+        #3b82f6
     );
 
     padding:14px 22px;
 
     border-radius:14px;
 
+    font-weight:700;
+
     cursor:pointer;
 
-    font-weight:bold;
+    transition:0.3s;
+
+    box-shadow:
+    0 10px 25px rgba(37,99,235,0.3);
+}
+
+.custom-file-upload:hover{
+    transform:translateY(-2px);
 }
 
 .custom-file-upload input{
@@ -81,37 +100,50 @@
 }
 
 .file-name{
-    color:#cbd5e1;
-    max-width:200px;
+    max-width:180px;
 
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
+
+    color:#cbd5e1;
+    font-size:14px;
 }
 
 .import-btn{
     border:none;
 
-    padding:14px 22px;
-
-    border-radius:14px;
-
-    background:#2563eb;
+    background:linear-gradient(
+        135deg,
+        #06b6d4,
+        #0891b2
+    );
 
     color:white;
 
-    font-weight:bold;
+    padding:14px 24px;
+
+    border-radius:14px;
+
+    font-weight:700;
 
     cursor:pointer;
+
+    transition:0.3s;
 }
 
-/* CARDS */
+.import-btn:hover{
+    transform:translateY(-2px);
+    opacity:0.95;
+}
+
+/* ================= CARDS ================= */
 
 .cards{
     display:grid;
 
     grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
+    repeat(auto-fit,minmax(240px,1fr));
 
     gap:25px;
 
@@ -119,110 +151,172 @@
 }
 
 .card{
-    background:rgba(255,255,255,0.06);
+    position:relative;
 
-    border:1px solid rgba(255,255,255,0.08);
+    overflow:hidden;
 
     padding:28px;
 
-    border-radius:24px;
+    border-radius:26px;
 
-    backdrop-filter:blur(12px);
+    background:rgba(255,255,255,0.05);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(14px);
 
     transition:0.3s;
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,0.2);
+}
+
+.card::before{
+    content:"";
+
+    position:absolute;
+
+    width:160px;
+    height:160px;
+
+    background:#2563eb20;
+
+    border-radius:50%;
+
+    top:-60px;
+    right:-60px;
 }
 
 .card:hover{
-    transform:translateY(-5px);
+    transform:translateY(-6px);
+
+    box-shadow:
+    0 18px 40px rgba(0,0,0,0.35);
 }
 
 .card h2{
+    font-size:17px;
     color:#cbd5e1;
-    margin-bottom:12px;
+    margin-bottom:14px;
 }
 
 .card h1{
     font-size:42px;
+    font-weight:800;
     color:#60a5fa;
 }
 
-/* CADASTRO */
+/* ================= CADASTRO ================= */
 
 .cadastro-box{
     margin-bottom:35px;
+
+    padding:30px;
+
+    border-radius:28px;
+
+    background:rgba(255,255,255,0.05);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(14px);
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,0.25);
+}
+
+.cadastro-box h2{
+    font-size:26px;
+    margin-bottom:24px;
+    color:#60a5fa;
+}
+
+.cadastro-form{
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:18px;
+}
+
+.cadastro-form input,
+.cadastro-form select{
+    height:55px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:16px;
 
     background:rgba(255,255,255,0.06);
 
     border:1px solid rgba(255,255,255,0.08);
 
-    padding:28px;
-
-    border-radius:24px;
-}
-
-.cadastro-box h2{
-    margin-bottom:20px;
-    color:#60a5fa;
-}
-
-.cadastro-form{
-    display:flex;
-    gap:15px;
-    flex-wrap:wrap;
-}
-
-.cadastro-form input,
-.cadastro-form select{
-    flex:1;
-
-    min-width:180px;
-
-    background:#0f172a;
-
-    border:1px solid rgba(255,255,255,0.08);
+    padding:0 18px;
 
     color:white;
 
-    padding:14px;
+    font-size:15px;
+}
 
-    border-radius:14px;
+.cadastro-form input::placeholder{
+    color:#94a3b8;
 }
 
 .cadastro-form button{
     border:none;
 
-    padding:14px 24px;
-
-    border-radius:14px;
+    border-radius:16px;
 
     background:linear-gradient(
-        90deg,
+        135deg,
         #2563eb,
         #06b6d4
     );
 
     color:white;
 
-    font-weight:bold;
+    font-weight:700;
 
     cursor:pointer;
+
+    transition:0.3s;
+
+    min-height:55px;
+
+    font-size:15px;
+
+    box-shadow:
+    0 10px 25px rgba(37,99,235,0.3);
 }
 
-/* TABELA */
+.cadastro-form button:hover{
+    transform:translateY(-2px);
+}
+
+/* ================= TABELA ================= */
 
 .table-box{
-    background:rgba(255,255,255,0.06);
-
-    border:1px solid rgba(255,255,255,0.08);
-
     padding:30px;
 
     border-radius:28px;
+
+    background:rgba(255,255,255,0.05);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(14px);
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,0.25);
 }
 
 .table-box h2{
     margin-bottom:25px;
     color:#60a5fa;
+    font-size:28px;
 }
 
 table{
@@ -231,100 +325,199 @@ table{
 }
 
 thead{
-    background:#2563eb;
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
 }
 
 thead th{
     padding:18px;
     text-align:left;
+    font-size:14px;
+    font-weight:700;
 }
 
 tbody tr{
-    background:rgba(255,255,255,0.04);
+    background:rgba(255,255,255,0.03);
+
+    transition:0.25s;
 }
 
 tbody tr:hover{
-    background:rgba(96,165,250,0.12);
+    background:rgba(96,165,250,0.1);
 }
 
 tbody td{
     padding:18px;
 
     border-bottom:
-    1px solid rgba(255,255,255,0.06);
+    1px solid rgba(255,255,255,0.05);
+
+    color:#e2e8f0;
 }
 
-/* STATUS */
+/* ================= STATUS ================= */
 
 .status-ativo{
-    background:#16a34a22;
-    color:#4ade80;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
 
     padding:8px 14px;
 
     border-radius:999px;
 
-    font-weight:bold;
+    background:#16a34a20;
+
+    color:#4ade80;
+
+    font-size:13px;
+    font-weight:700;
 }
 
 .status-inativo{
-    background:#dc262622;
-    color:#f87171;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
 
     padding:8px 14px;
 
     border-radius:999px;
 
-    font-weight:bold;
+    background:#dc262620;
+
+    color:#f87171;
+
+    font-size:13px;
+    font-weight:700;
 }
 
-/* AÇÕES */
+/* ================= BOTÕES PROFISSIONAIS ================= */
 
 .acoes{
     display:flex;
-    gap:10px;
+    align-items:center;
+    gap:12px;
 }
 
 .edit-btn,
 .delete-btn{
-    width:40px;
-    height:40px;
+    width:42px;
+    height:42px;
 
     border:none;
 
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+    font-size:16px;
+
+    backdrop-filter:blur(10px);
+}
+
+/* EDITAR */
+
+.edit-btn{
+    background:rgba(37,99,235,0.15);
+
+    border:1px solid rgba(59,130,246,0.3);
+
+    color:#60a5fa;
+}
+
+.edit-btn:hover{
+    background:#2563eb;
+
+    color:white;
+
+    transform:
+    translateY(-2px)
+    scale(1.05);
+
+    box-shadow:
+    0 10px 20px rgba(37,99,235,0.35);
+}
+
+/* EXCLUIR */
+
+.delete-btn{
+    background:rgba(220,38,38,0.12);
+
+    border:1px solid rgba(248,113,113,0.25);
+
+    color:#f87171;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+
+    color:white;
+
+    transform:
+    translateY(-2px)
+    scale(1.05);
+
+    box-shadow:
+    0 10px 20px rgba(220,38,38,0.35);
+}
+
+/* ================= SEM DADOS ================= */
+
+.sem-dados{
+    text-align:center;
+    padding:40px;
+    color:#94a3b8;
+    font-size:17px;
+}
+
+/* ================= PAGINAÇÃO ================= */
+
+.paginacao{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+
+    margin-top:28px;
+}
+
+.paginacao button{
+    border:none;
+
+    min-width:42px;
+    height:42px;
+
     border-radius:12px;
+
+    background:rgba(255,255,255,0.06);
+
+    border:1px solid rgba(255,255,255,0.08);
 
     color:white;
 
     cursor:pointer;
 
-    font-size:18px;
-
-    transition:0.3s;
+    transition:0.25s;
 }
 
-.edit-btn{
+.paginacao button:hover{
     background:#2563eb;
 }
 
-.delete-btn{
-    background:#dc2626;
+.paginacao .ativo{
+    background:#2563eb;
 }
 
-.edit-btn:hover,
-.delete-btn:hover{
-    transform:scale(1.08);
-}
-
-/* SEM DADOS */
-
-.sem-dados{
-    text-align:center;
-    padding:30px;
-    color:#94a3b8;
-}
-
-/* RESPONSIVO */
+/* ================= RESPONSIVO ================= */
 
 @media(max-width:900px){
 
@@ -335,7 +528,10 @@ tbody td{
     .sensor-header{
         flex-direction:column;
         align-items:flex-start;
-        gap:20px;
+    }
+
+    .sensor-header h1{
+        font-size:30px;
     }
 
     .import-box{
@@ -345,7 +541,7 @@ tbody td{
     }
 
     .cadastro-form{
-        flex-direction:column;
+        grid-template-columns:1fr;
     }
 
     table{
@@ -354,87 +550,60 @@ tbody td{
     }
 }
 
-/* AÇÕES */
-
-.acoes{
-    display:flex;
-    gap:10px;
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 25px 0;
+  flex-wrap: wrap;
 }
 
-.edit-btn,
-.delete-btn{
-    border:none;
-    width:42px;
-    height:42px;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:18px;
-    transition:0.3s;
+/* BOTÕES BASE */
+.page-btn {
+  min-width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: #e5e7eb;
+  color: #1f2937;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-.edit-btn{
-    background:#2563eb;
-    color:white;
+/* HOVER */
+.page-btn:hover {
+  background: #d1d5db;
+  transform: translateY(-2px);
 }
 
-.edit-btn:hover{
-    transform:scale(1.08);
-    background:#1d4ed8;
+/* BOTÃO ATIVO */
+.page-btn.active {
+  background: #2563eb;
+  color: white;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+  transform: scale(1.05);
 }
 
-.delete-btn{
-    background:#dc2626;
-    color:white;
+/* BOTÕES DESABILITADOS (← →) */
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-.delete-btn:hover{
-    transform:scale(1.08);
-    background:#b91c1c;
-}
+/* RESPONSIVO */
+@media (max-width: 600px) {
+  .pagination {
+    gap: 6px;
+  }
 
-/* CADASTRO */
-
-.cadastro-box{
-    margin-bottom:35px;
-    padding:30px;
-    border-radius:24px;
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
-}
-
-.cadastro-box h2{
-    margin-bottom:20px;
-    color:#60a5fa;
-}
-
-.cadastro-form{
-    display:flex;
-    gap:15px;
-    flex-wrap:wrap;
-}
-
-.cadastro-form input{
-    flex:1;
-    min-width:220px;
-    padding:14px;
-    border:none;
-    border-radius:14px;
-    background:rgba(255,255,255,0.08);
-    color:white;
-    outline:none;
-}
-
-.cadastro-form button{
-    padding:14px 24px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(
-        90deg,
-        #2563eb,
-        #06b6d4
-    );
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
+  .page-btn {
+    min-width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
 }

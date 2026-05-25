@@ -13,19 +13,7 @@ function Sensor() {
 
   const { tipo } = useParams();
 
-  /* ================= USUARIO ================= */
-
-  const usuario =
-    JSON.parse(
-      localStorage.getItem("usuario")
-    );
-
-  /* ADMIN */
-
-  const isAdmin =
-    usuario?.tipo === "ADMIN";
-
-  /* STATES */
+  /* ================= STATES ================= */
 
   const [arquivo, setArquivo] =
     useState(null);
@@ -33,10 +21,16 @@ function Sensor() {
   const [sensores, setSensores] =
     useState([]);
 
+  const [paginaAtual, setPaginaAtual] =
+    useState(1);
+
+  const sensoresPorPagina = 8;
+
   const [novoSensor, setNovoSensor] =
     useState({
       unidade_med: "",
-      mic: ""
+      mic: "",
+      status: true
     });
 
   /* ================= CARREGAR ================= */
@@ -51,7 +45,9 @@ function Sensor() {
             `/sensores/por_tipo/?tipo=${tipo}`
           );
 
-        setSensores(response.data);
+        setSensores(
+          response.data
+        );
 
       } catch (err) {
 
@@ -63,7 +59,7 @@ function Sensor() {
 
     carregarSensores();
 
-  }, []);
+  }, [tipo]);
 
   /* ================= IMPORTAR ================= */
 
@@ -212,11 +208,15 @@ function Sensor() {
           "/sensores/",
           {
             sensor: tipo,
+
             unidade_med:
               novoSensor.unidade_med,
+
             mic:
               novoSensor.mic,
-            status: true
+
+            status:
+              novoSensor.status
           }
         );
 
@@ -226,7 +226,8 @@ function Sensor() {
 
         setNovoSensor({
           unidade_med: "",
-          mic: ""
+          mic: "",
+          status: true
         });
 
         carregarSensores();
@@ -240,6 +241,348 @@ function Sensor() {
         );
       }
     };
-  }
-    export default Sensor;
 
+  /* ================= PAGINAÇÃO ================= */
+
+  const ultimoIndice =
+    paginaAtual *
+    sensoresPorPagina;
+
+  const primeiroIndice =
+    ultimoIndice -
+    sensoresPorPagina;
+
+  const sensoresPagina =
+    sensores.slice(
+      primeiroIndice,
+      ultimoIndice
+    );
+
+  const totalPaginas =
+    Math.ceil(
+      sensores.length /
+      sensoresPorPagina
+    );
+
+  return (
+
+    <div className="sensor-page">
+
+      {/* HEADER */}
+
+      <div className="sensor-header">
+
+        <div>
+
+          <h1>
+            Sensor de {tipo}
+          </h1>
+
+          <p>
+            Monitoramento inteligente em tempo real
+          </p>
+
+        </div>
+
+        <div className="import-box">
+
+          <label className="custom-file-upload">
+
+            <input
+              type="file"
+              onChange={(e) =>
+                setArquivo(
+                  e.target.files[0]
+                )
+              }
+            />
+
+            Escolher XLSX
+
+          </label>
+
+          <span className="file-name">
+
+            {arquivo
+              ? arquivo.name
+              : "Nenhum arquivo"}
+
+          </span>
+
+          <button
+            className="import-btn"
+            onClick={
+              importarPlanilha
+            }
+          >
+            Importar
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* CARDS */}
+
+      <div className="cards">
+
+        <div className="card">
+
+          <h2>
+            Total Sensores
+          </h2>
+
+          <h1>
+            {sensores.length}
+          </h1>
+
+        </div>
+
+        <div className="card">
+
+          <h2>
+            Tipo Monitorado
+          </h2>
+
+          <h1>
+            {tipo}
+          </h1>
+
+        </div>
+
+        <div className="card">
+
+          <h2>
+            Sistema
+          </h2>
+
+          <h1>
+            Online
+          </h1>
+
+        </div>
+
+      </div>
+
+      {/* CADASTRO */}
+
+      <div className="cadastro-box">
+
+        <h2>
+          Novo Sensor de {tipo}
+        </h2>
+
+        <div className="cadastro-form">
+
+          <input
+            type="text"
+            placeholder="Unidade"
+            value={
+              novoSensor.unidade_med
+            }
+            onChange={(e) =>
+              setNovoSensor({
+                ...novoSensor,
+                unidade_med:
+                  e.target.value
+              })
+            }
+          />
+
+          <input
+            type="number"
+            placeholder="ID Microcontrolador"
+            value={
+              novoSensor.mic
+            }
+            onChange={(e) =>
+              setNovoSensor({
+                ...novoSensor,
+                mic:
+                  e.target.value
+              })
+            }
+          />
+
+          <select
+            value={
+              novoSensor.status
+            }
+            onChange={(e) =>
+              setNovoSensor({
+                ...novoSensor,
+                status:
+                  e.target.value === "true"
+              })
+            }
+          >
+
+            <option value="true">
+              Ativo
+            </option>
+
+            <option value="false">
+              Inativo
+            </option>
+
+          </select>
+
+          <button
+            onClick={
+              cadastrarSensor
+            }
+          >
+            Cadastrar
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* TABELA */}
+
+      <div className="table-box">
+
+        <h2>
+          Sensores Cadastrados
+        </h2>
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>ID</th>
+
+              <th>Sensor</th>
+
+              <th>Unidade</th>
+
+              <th>Status</th>
+
+              <th>Ações</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {sensoresPagina.length > 0 ? (
+
+              sensoresPagina.map((s) => (
+
+                <tr key={s.id}>
+
+                  <td>{s.id}</td>
+
+                  <td>{s.sensor}</td>
+
+                  <td>{s.unidade_med}</td>
+
+                  <td>
+
+                    <span
+                      className={
+                        s.status
+                          ? "status-ativo"
+                          : "status-inativo"
+                      }
+                    >
+                      {s.status
+                        ? "Ativo"
+                        : "Inativo"}
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    <div className="acoes">
+
+                      <button
+                        className="edit-btn"
+                        onClick={() =>
+                          editarSensor(s)
+                        }
+                      >
+                        ✏️
+                      </button>
+
+                      <button
+                        className="delete-btn"
+                        onClick={() =>
+                          excluirSensor(s.id)
+                        }
+                      >
+                        🗑️
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              ))
+
+            ) : (
+
+              <tr>
+
+                <td
+                  colSpan="5"
+                  className="sem-dados"
+                >
+                  Nenhum sensor encontrado
+                </td>
+
+              </tr>
+
+            )}
+
+          </tbody>
+
+        </table>
+
+        {/* PAGINAÇÃO */}
+<div className="pagination">
+
+  <button
+    className="page-btn"
+    disabled={paginaAtual === 1}
+    onClick={() => setPaginaAtual(paginaAtual - 1)}
+  >
+    ←
+  </button>
+
+  {Array.from({ length: totalPaginas }).map((_, index) => (
+    <button
+      key={index}
+      className={`page-btn ${
+        paginaAtual === index + 1 ? "active" : ""
+      }`}
+      onClick={() => setPaginaAtual(index + 1)}
+    >
+      {index + 1}
+    </button>
+  ))}
+
+  <button
+    className="page-btn"
+    disabled={paginaAtual === totalPaginas}
+    onClick={() => setPaginaAtual(paginaAtual + 1)}
+  >
+    →
+  </button>
+
+</div>
+
+      </div>
+
+    </div>
+  );
+}
+
+export default Sensor;
